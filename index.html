@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>lierance</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="running.css">
+
+	 
+    <style type="text/css">
+    	
+    	.myclass{ background: green;color: white;padding: 10px;margin: 10px }
+    </style>
+	
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div id="mydiv"></div>
+ <div class="col-md-2">
+    <b>TIMER</b><br>
+<h1><div id="elapsed" style="float: left;size: 40px"></div></h1></div>
+ <div class="col-md-10"> <button id="btn" class="btn btn-success" style="float: right;">SEND DATA</button>
+  <p id="message"></p>
+</div>
+</div>
+
+
+<center><div id="response"></div></center><br />
+<div class="row">
+   
+    <div class="col-md-2"><input type="text" name="job_name" id="jobname" class="form-control" required="" placeholder="job name"></div>
+
+  <div class="col-md-2"><input type="text" name="arrival" id="arrivall" class="form-control" required="" placeholder="arrival time"></div>
+  <div class="col-md-2"><input type="text" name="burst" id="burst" class="form-control" required="" placeholder="job burst"></div>
+    <div class="col-md-3"><input type="text" name="priority" id="priority" class="form-control" required="" placeholder="priority"></div>
+    <div class="col-md-3"><button onclick="addjob()" class="btn btn-block btn-success">ADD JOB TO CPU</button></div>
+  </div>
+
+  
+
+
+<br />
+<div class="row">
+<div class="col-md-2"><b>Waiting List</b></div>
+
+<div class="col-md-8">
+<p id="w0" ></p>  
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-2"><b>Waiting List</b></div>
+
+<div class="col-md-8">
+<p id="p0" ></p>  
+
+
+
+</div>
+</div>
+
+
+
+
+</div>
+
+</body>
+<script src='jquery.min.js'></script>
+<script src='timer.js'></script>
+<script src='job.js'></script>
+<script src='addjob.js'></script>
+<script src='processor.js'></script>
+
+<script type="text/javascript">
+  $('#btn').on('click',function(){
+  	console.log("clicked");
+    var config = {
+    headers: {'Access-Control-Allow-Origin': '*'}
+};
+
+  var jobs=[{"jobname":"p1","jobburst":"23","jobarrival":"23","priority":"3"},{"jobname":"p3","jobburst":"2","jobarrival":"5","priority":"7"}]
+  if(waiting_list.length==0){ alert("Please add some jobs");}
+  else{
+  var jString = JSON.stringify(waiting_list);
+  $.post('http://localhost:9090/restapi/job',{"jstring":jString},function(data){
+   $('#message').text(data).css('color', 'red');
+   log(0,data);
+
+
+  })}})
+
+</script>
+
+
+</html>
