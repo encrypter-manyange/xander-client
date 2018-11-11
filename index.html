@@ -14,57 +14,138 @@
 	
 </head>
 <body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+      <h3 class="alert alert-info">Welcome Header</h3>
+    </div>
+    <div class="row">
+      <div class="col-xs-8">
+         <div class="panel panel-primary" >
+      <div class="panel-heading" style="background-color: green">
+        Waiting List <span class="label label-info" style="background-color: green">[JobName | ArrivalTime | BurstTime | PriorityNumber]</span>
+      </div>
+      <div class="panel-body">
+        <div class="col-lg-12">
+              <p id="w0" ></p>  
+        </div>
+        </div>
+      </div>
+
+        <div class="panel panel-primary">
+      <div class="panel-heading">
+        System Output Variable
+      </div>
+      <div class="panel-body">
+        <div class="col-lg-12">
+              Average times /trn around here! 
+        </div>
+        </div>
+      </div>
+       
+    </div>
+  
+       
+
+      <div class="col-lg-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <span>
+              <h4 style="margin:0;padding:0">Control Panel  <span style="margin:0;padding:0;float: right;" class="label" id="elapsed"></span></h4> 
+             
+            </span>
+            
+        </div>
+          <div class="panel-body">
+            <div class="row">
+              
+            </div><br>
+            <div class="row">
+              <div class="col-md-12">
+              <input type="text" name="job_name" id="jobname" class="form-control" required="" placeholder="job name">
+            </div>
+            </div><br>
+            <div class="row">
+               <div class="col-md-12">
+              <input type="text" name="arrival" id="arrivall" class="form-control" required="" placeholder="arrival time">
+            </div>
+            </div><br>
+            <div class="row">
+              <div class="col-md-12">
+              <input type="text" name="burst" id="burst" class="form-control" required="" placeholder="job burst">
+            </div>
+            </div><br>
+            <div class="row">
+              <div class="col-md-12">
+              <input type="text" name="priority" id="priority" class="form-control" required="" placeholder="priority">
+            </div>
+            </div><br>
+            <div class="row">
+              <div class="col-md-6">
+              <button onclick="addjob()" class="btn btn-block btn-success">ADD JOB TO CPU</button>
+            </div>
+             <div class="col-md-6"> <button id="btn" class="btn btn-primary" style="float: right;">SEND DATA</button>
+          </div>
+            </div>
+           
+            
+            
+            
+        </div>
+            
+      </div>
+
+
+    </div>
+
+</div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Processing Jobs 
+      </div>
+      <div class="panel-body">
+        <div class="row">
+      <div class="col-lg-12">
+        <p id="p0" ></p>
+      </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+   
+
+    <!-- <div class="panel panel-primary">
+      <div class="panel-heading">
+        
+      </div>
+      <div class="panel-body">
+        
+      </div>
+    </div> -->
+
+
+    
+  </div>
 <div class="container">
   <div class="row">
-    <div id="mydiv"></div>
+    <div id="mydiv" hidden="hidden" style="width: 0.1px;height: 0.1px;"></div>
  <div class="col-md-2">
-    <b>TIMER</b><br>
-<h1><div id="elapsed" style="float: left;size: 40px"></div></h1></div>
- <div class="col-md-10"> <button id="btn" class="btn btn-success" style="float: right;">SEND DATA</button>
-  <p id="message"></p>
+<!--   <p id="message"></p> -->
 </div>
 </div>
-
-
-<center><div id="response"></div></center><br />
-<div class="row">
-   
-    <div class="col-md-2"><input type="text" name="job_name" id="jobname" class="form-control" required="" placeholder="job name"></div>
-
-  <div class="col-md-2"><input type="text" name="arrival" id="arrivall" class="form-control" required="" placeholder="arrival time"></div>
-  <div class="col-md-2"><input type="text" name="burst" id="burst" class="form-control" required="" placeholder="job burst"></div>
-    <div class="col-md-3"><input type="text" name="priority" id="priority" class="form-control" required="" placeholder="priority"></div>
-    <div class="col-md-3"><button onclick="addjob()" class="btn btn-block btn-success">ADD JOB TO CPU</button></div>
-  </div>
-
-  
-
 
 <br />
-<div class="row">
-<div class="col-md-2"><b>Waiting List</b></div>
 
-<div class="col-md-8">
-<p id="w0" ></p>  
-
-</div>
-</div>
-<div class="row">
-<div class="col-md-2"><b>Waiting List</b></div>
-
-<div class="col-md-8">
-<p id="p0" ></p>  
-
-
-
-</div>
-</div>
 
 
 
 
 </div>
-
+  </div>
 </body>
 <script src='jquery.min.js'></script>
 <script src='timer.js'></script>
@@ -84,7 +165,13 @@
   else{
   var jString = JSON.stringify(waiting_list);
   $.post('http://localhost:9090/restapi/job',{"jstring":jString},function(data){
-   $('#message').text(data).css('color', 'red');
+   // $('#message').text(data).css('color', 'red');
+     waiting_list.sort(function(obj1, obj2) {
+  // Ascending: first age less than the previous
+  return obj1.jobarrival - obj2.jobarrival;
+});
+
+counter=waiting_list[0].jobarrival;
    log(0,data);
 
 
