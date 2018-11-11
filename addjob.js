@@ -20,7 +20,7 @@ var counterer =0;
       d1.insertAdjacentHTML('beforeend', content);
       }
       else{
-         var content='<span class=myclass id='+todo.getid+">"+todo.getjobname+"</span>"
+         var content='<span class=myclass id='+todo.getid+">"+todo.getjobname+"|"+todo.getarrivaltime+"|"+todo.getburst+"|"+todo.getpriority+"</span>"
          d1.insertAdjacentHTML('beforeend', content);
       }
       counterer+=1;
